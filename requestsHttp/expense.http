@@ -1,0 +1,3 @@
+
+### get all expenses
+http://localhost:8080/expenses/all
