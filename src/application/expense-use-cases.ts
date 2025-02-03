@@ -13,7 +13,18 @@ export class ExpenseUseCases {
             res.json({message: "", result: expensesList});
         } catch (e: any) {
             console.error(e);
-            res.status(500).json(e);
+            res.status(500).json(e.message);
+        }
+    }
+
+    async addExpense(req: Request, res: Response) {
+        const { description, amount }: Expense = req.body as Expense;
+        try {
+            const expenseSaved: boolean = await expenseRepository.saveExpense(description, amount);
+            res.json({ message: expenseSaved ? "expensed saved" : "expense did not saved" });
+        } catch (e: any) {
+            console.error(e);
+            res.status(500).json(e.message);
         }
     }
 }

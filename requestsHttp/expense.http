@@ -1,3 +1,12 @@
 
 ### get all expenses
-http://localhost:8080/expenses/all
+GET http://localhost:8080/expenses/all
+
+### save expense
+POST http://localhost:8080/expenses/add HTTP/1.1
+Content-Type: application/json
+
+{
+  "description": "hola",
+  "amount": 32
+}

@@ -5,6 +5,7 @@ process.loadEnvFile();
 
 const app = express();
 const PORT: number = Number(process.env["PORT"]);
+app.use(express.json());
 
 app.use('/expenses', routerExpense);
 

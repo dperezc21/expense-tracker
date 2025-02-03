@@ -20,8 +20,16 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         return Promise.resolve(0);
     }
 
-    saveExpense(expense: Expense): Promise<void> {
-        return Promise.resolve(undefined);
+    saveExpense(description: string, amount: number): Promise<boolean> {
+        return new Promise(async(resolve, reject): Promise<void> => {
+            const expensesList: Expense[] = await this.getAllExpenses();
+            const expenseToSave: Expense = {
+                amount, description, id: expensesList.length + 1, date: new Date
+            }
+            expensesList.push(expenseToSave);
+            await this.dataBase.writeInFile({expenses: expensesList});
+            resolve(true);
+        });
     }
 
     updateExpense(expense: Expense, params: Map<string, string>): Promise<void> {
