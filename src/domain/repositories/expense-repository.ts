@@ -1,4 +1,4 @@
-import {Expense} from "./interfaces/Expense";
+import {Expense} from "../interfaces/Expense";
 
 export interface ExpenseRepository {
     saveExpense(expense: Expense): Promise<void>;

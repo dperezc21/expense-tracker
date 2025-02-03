@@ -1,9 +1,9 @@
 import { Router } from "express";
-import {ExpenseController} from "./controllers/expenseController";
+import {ExpenseUseCases} from "../application/expense-use-cases";
 
 const routerExpense: Router = Router();
 
-const {getAllExpenses} = new ExpenseController();
+const {getAllExpenses} = new ExpenseUseCases();
 
 routerExpense.get('/all', getAllExpenses);
 
