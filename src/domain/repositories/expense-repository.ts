@@ -5,6 +5,6 @@ export interface ExpenseRepository {
     updateExpense(expense: Expense): Promise<void>;
     getAllExpenses(): Promise<Expense[]>;
     getSummaryExpense(): Promise<number>;
-    deleteExpense(expenseId: number): Promise<number>;
+    deleteExpense(expenseId: number): Promise<boolean>;
     getExpenseById(expenseId: number): Promise<Expense>;
 }

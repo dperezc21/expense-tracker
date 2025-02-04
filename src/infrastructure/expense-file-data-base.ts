@@ -5,8 +5,14 @@ import {DataBaseFile} from "./data-bases/data-base.json";
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseFile();
 
-    deleteExpense(expenseId: number): Promise<number> {
-        return Promise.resolve(0);
+    deleteExpense(expenseId: number): Promise<boolean> {
+        return new Promise(async(resolve, reject) => {
+            let expensesList: Expense[] = await this.getAllExpenses();
+            if(!expensesList.some(value => value.id == expenseId)) resolve(false);
+            expensesList = expensesList.filter(value => value.id != expenseId);
+            await this.dataBase.writeInFile({expenses: expensesList});
+            resolve(true);
+        })
     }
 
     getAllExpenses(): Promise<Expense[]> {
@@ -37,6 +43,7 @@ export class ExpenseFileDataBase implements ExpenseRepository {
             let expensesList: Expense[] = await this.getAllExpenses();
             expensesList = expensesList.map(value => value.id ? expense: value);
             await this.dataBase.writeInFile({expenses: expensesList});
+            resolve();
         })
     }
 

@@ -7,7 +7,7 @@ POST http://localhost:8080/expenses/add HTTP/1.1
 Content-Type: application/json
 
 {
-  "description": "hola",
+  "description": "Dinner",
   "amount": 32
 }
 
@@ -17,5 +17,8 @@ Content-Type: application/json
 
 {
   "description": "dinner",
-  "amount": 32
+  "amount": 31
 }
+
+### delte expense
+DELETE http://localhost:8080/expenses/delete/1
