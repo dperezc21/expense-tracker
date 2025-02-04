@@ -23,7 +23,14 @@ export class ExpenseFileDataBase implements ExpenseRepository {
     }
 
     getSummaryExpense(): Promise<number> {
-        return Promise.resolve(0);
+        return new Promise(async(resolve) => {
+            const expenseList: Expense[] = await this.getAllExpenses();
+            const expenseSummary: number = expenseList.reduce((value, current) => {
+                value.amount += current.amount;
+                return value
+            }).amount;
+            resolve(expenseSummary);
+        })
     }
 
     saveExpense(description: string, amount: number): Promise<boolean> {

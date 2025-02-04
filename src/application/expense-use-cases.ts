@@ -63,4 +63,16 @@ export class ExpenseUseCases {
             res.status(500).json(e.message);
         }
     }
+
+    async expenseSummary(req: Request, res: Response) {
+        try {
+            const summary: number = await expenseRepository.getSummaryExpense();
+            res.status(200).json({
+                summary
+            })
+        } catch (e: any) {
+            console.error(e);
+            res.status(500).json(e.message);
+        }
+    }
 }
