@@ -5,6 +5,11 @@ import {DataBaseFile} from "./data-bases/data-base.json";
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseFile();
 
+    private newExpenseId = (expenseList: Expense[]): number => {
+        if(!expenseList?.length) return 1;
+        return expenseList.reduce((a, b) => a.id > b.id ? a : b).id + 1;
+    }
+
     deleteExpense(expenseId: number): Promise<boolean> {
         return new Promise(async(resolve, reject) => {
             let expensesList: Expense[] = await this.getAllExpenses();
@@ -37,7 +42,7 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         return new Promise(async(resolve): Promise<void> => {
             const expensesList: Expense[] = await this.getAllExpenses();
             const expenseToSave: Expense = {
-                amount, description, id: expensesList.length + 1, date: new Date
+                amount, description, id: this.newExpenseId(expensesList), date: new Date
             }
             expensesList.push(expenseToSave);
             await this.dataBase.writeInFile({expenses: expensesList});
