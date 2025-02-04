@@ -27,4 +27,27 @@ export class ExpenseUseCases {
             res.status(500).json(e.message);
         }
     }
+
+    async updateExpense(req: Request, res: Response) {
+        const expenseId: number = req.params.expenseId as unknown as number;
+        const { description, amount }: Expense = req.body as Expense;
+        try {
+            const expenseToUpdate: Expense = {
+                description,
+                amount,
+                id: expenseId,
+                date: new Date()
+            }
+            const getExpense = await expenseRepository.getExpenseById(expenseId);
+            if(!getExpense?.id) {
+                res.status(400).json({ message: "expense did not exists"});
+                return ;
+            }
+            await expenseRepository.updateExpense(expenseToUpdate);
+            res.status(200).json({ message: "expensed updated" });
+        } catch (e: any) {
+            console.error(e);
+            res.status(500).json(e.message);
+        }
+    }
 }
