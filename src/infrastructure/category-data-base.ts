@@ -12,7 +12,13 @@ export class CategoryDataBase implements CategoryRepository {
     }
 
     deleteCategory(categoryId: number): Promise<boolean> {
-        return Promise.resolve(false);
+        return new Promise(async(resolve, reject) => {
+            const categories: Category[] = await this.getAllCategories();
+            if(categories.every(value => value.id !== categoryId)) resolve(false);
+            const categoriesFiltered: Category[] = categories.filter(value => value.id !== categoryId);
+            await this.dataBase.writeInFile({ categories: categoriesFiltered });
+            resolve(true);
+        })
     }
 
     getAllCategories(): Promise<Category[]> {
@@ -24,7 +30,11 @@ export class CategoryDataBase implements CategoryRepository {
     }
 
     getCategoryById(categoryId: number): Promise<Category | null> {
-        return Promise.resolve(null);
+        return new Promise(async(resolve, reject) => {
+            const categories: Category[] = await this.getAllCategories();
+            const category: Category = categories.find(value => value.id === categoryId) as Category;
+            resolve(category);
+        })
     }
 
     saveCategory(categoryName: string): Promise<boolean> {
@@ -37,5 +47,13 @@ export class CategoryDataBase implements CategoryRepository {
             const dataCategories: DataCategory = {categories: [...categories, newCategory] };
             await this.dataBase.writeInFile(dataCategories);
         });
+    }
+
+    getCategoryByName(categoryName: string): Promise<Category> {
+        return new Promise(async(resolve, reject) => {
+            const categories: Category[] = await this.getAllCategories();
+            const category: Category = categories.find(value => value.name === categoryName) as Category;
+            resolve(category);
+        })
     }
 }

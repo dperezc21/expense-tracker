@@ -5,4 +5,5 @@ export interface CategoryRepository {
     getAllCategories(): Promise<Category[]>;
     deleteCategory(categoryId: number): Promise<boolean>;
     getCategoryById(categoryId: number): Promise<Category | null>;
+    getCategoryByName(categoryName: string): Promise<Category>;
 }
