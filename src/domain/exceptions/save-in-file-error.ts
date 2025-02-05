@@ -1,5 +1,5 @@
 
-export class SaveExpenseError extends Error {
+export class SaveInFileError extends Error {
     constructor(message: string) {
         super(message);
     }

@@ -1,9 +1,9 @@
 import {ExpenseRepository} from "../domain/repositories/expense-repository";
 import {Expense} from "../domain/interfaces/Expense";
-import {DataBaseFile} from "./data-bases/data-base.json";
+import {DataBaseExpense} from "./data-bases/data-base.json";
 
 export class ExpenseFileDataBase implements ExpenseRepository {
-    private dataBase = new DataBaseFile();
+    private dataBase = new DataBaseExpense();
 
     private newExpenseId = (expenseList: Expense[]): number => {
         if(!expenseList?.length) return 1;
