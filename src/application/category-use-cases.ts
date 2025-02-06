@@ -5,7 +5,6 @@ import {Category} from "../domain/interfaces/category";
 
 const categoryRepository: CategoryRepository = new CategoryDataBase();
 
-
 export class CategoryUseCases {
     async addCategory(req: Request, res: Response) {
         const {name: categoryName}: Category = req.body;
@@ -17,6 +16,15 @@ export class CategoryUseCases {
             }
             await categoryRepository.saveCategory(categoryName);
             res.status(200).json({ message: "category saved" });
+        } catch (err: any) {
+            res.status(500).send(err.message);
+        }
+    }
+
+    async getAllCategories(req: Request, res: Response) {
+        try {
+            const allCategories: Category[] = await categoryRepository.getAllCategories();
+            res.status(200).json({ categories: allCategories });
         } catch (err: any) {
             res.status(500).send(err.message);
         }

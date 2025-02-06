@@ -6,5 +6,6 @@ const routerCategory: Router = Router();
 const categoryUseCase = new CategoryUseCases();
 
 routerCategory.post('/add', categoryUseCase.addCategory);
+routerCategory.get('', categoryUseCase.getAllCategories);
 
 export default routerCategory;

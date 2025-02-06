@@ -6,3 +6,6 @@ Content-Type: application/json
 {
   "name": "themes"
 }
+
+### get categories
+GET http://localhost:8080/categories
