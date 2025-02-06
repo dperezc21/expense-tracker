@@ -1,1 +1,1 @@
-{"expenses":[{"amount":32,"description":"Dinner","id":2,"date":"2025-02-04T00:54:11.704Z"},{"amount":50,"description":"pc","id":3,"date":"2025-02-04T02:07:14.889Z"}]}
+{"expenses":[{"amount":31,"description":"dinner","id":2,"date":"2025-02-06T02:42:07.371Z","category":{"id":1,"name":"themes"}},{"amount":31,"description":"dinner","id":2,"date":"2025-02-06T02:42:07.371Z","category":{"id":1,"name":"themes"}}]}

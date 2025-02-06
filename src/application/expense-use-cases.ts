@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import {ExpenseRepository} from "../domain/repositories/expense-repository";
 import {ExpenseFileDataBase} from "../infrastructure/expense-file-data-base";
 import {Expense} from "../domain/interfaces/Expense";
+import {CategoryRepository} from "../domain/repositories/category-repository";
+import {CategoryDataBase} from "../infrastructure/category-data-base";
+import {Category} from "../domain/interfaces/category";
 
 const expenseRepository: ExpenseRepository = new ExpenseFileDataBase();
+const categoryRepository: CategoryRepository = new CategoryDataBase();
 
 export class ExpenseUseCases {
 
@@ -18,9 +22,14 @@ export class ExpenseUseCases {
     }
 
     async addExpense(req: Request, res: Response) {
-        const { description, amount }: Expense = req.body as Expense;
+        const { description, amount, category }: Expense = req.body as Expense;
         try {
-            const expenseSaved: boolean = await expenseRepository.saveExpense(description, amount);
+            const findCategory: Category = await categoryRepository.getCategoryById(category as number) as Category;
+            if(!findCategory?.id) {
+                res.status(400).json({ message: "category not exists" });
+                return ;
+            }
+            const expenseSaved: boolean = await expenseRepository.saveExpense(description, amount, findCategory);
             res.json({ message: expenseSaved ? "expensed saved" : "expense did not save" });
         } catch (e: any) {
             console.error(e);
@@ -30,16 +39,22 @@ export class ExpenseUseCases {
 
     async updateExpense(req: Request, res: Response) {
         const expenseId: number = req.params.expenseId as unknown as number;
-        const { description, amount }: Expense = req.body as Expense;
+        const { description, amount, category }: Expense = req.body as Expense;
         try {
             const getExpense = await expenseRepository.getExpenseById(expenseId);
             if(!getExpense?.id) {
                 res.status(400).json({ message: "expense did not exists"});
                 return ;
             }
+            const findCategory: Category = await categoryRepository.getCategoryById(category as number) as Category;
+            if(!findCategory?.id) {
+                res.status(400).json({ message: "category not exists" });
+                return ;
+            }
             getExpense.amount = amount;
             getExpense.description = description;
             getExpense.date = new Date();
+            getExpense.category = findCategory;
             await expenseRepository.updateExpense(getExpense);
             res.status(200).json({ message: "expensed updated" });
         } catch (e: any) {

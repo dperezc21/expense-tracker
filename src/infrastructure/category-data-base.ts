@@ -29,7 +29,7 @@ export class CategoryDataBase implements CategoryRepository {
         })
     }
 
-    getCategoryById(categoryId: number): Promise<Category | null> {
+    getCategoryById(categoryId: number): Promise<Category> {
         return new Promise(async(resolve, reject) => {
             const categories: Category[] = await this.getAllCategories();
             const category: Category = categories.find(value => value.id === categoryId) as Category;

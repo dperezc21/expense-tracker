@@ -1,6 +1,7 @@
 import {ExpenseRepository} from "../domain/repositories/expense-repository";
 import {Expense} from "../domain/interfaces/Expense";
 import {DataBaseExpense} from "./data-bases/data-base.json";
+import {Category} from "../domain/interfaces/category";
 
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseExpense();
@@ -38,11 +39,11 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         })
     }
 
-    saveExpense(description: string, amount: number): Promise<boolean> {
+    saveExpense(description: string, amount: number, category: Category): Promise<boolean> {
         return new Promise(async(resolve): Promise<void> => {
             const expensesList: Expense[] = await this.getAllExpenses();
             const expenseToSave: Expense = {
-                amount, description, id: this.newExpenseId(expensesList), date: new Date
+                amount, description, id: this.newExpenseId(expensesList), date: new Date, category
             }
             expensesList.push(expenseToSave);
             await this.dataBase.writeInFile({expenses: expensesList});
