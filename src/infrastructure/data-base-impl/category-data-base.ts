@@ -1,8 +1,8 @@
-import {CategoryRepository} from "../domain/repositories/category-repository";
-import {Category} from "../domain/interfaces/category";
-import {DataBaseCategory} from "./data-bases/data-base.json";
-import {DataCategory} from "../domain/interfaces/data-category";
-import {ExpenseId} from "../domain/utils/expense-Id";
+import {CategoryRepository} from "../../domain/repositories/category-repository";
+import {Category} from "../../domain/interfaces/category";
+import {DataBaseCategory} from "../data-bases/data-base.json";
+import {DataCategory} from "../../domain/interfaces/data-category";
+import {ExpenseId} from "../../domain/utils/expense-Id";
 
 export class CategoryDataBase implements CategoryRepository {
     private dataBase = new DataBaseCategory();

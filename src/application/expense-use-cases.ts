@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {ExpenseRepository} from "../domain/repositories/expense-repository";
-import {ExpenseFileDataBase} from "../infrastructure/expense-file-data-base";
+import {ExpenseFileDataBase} from "../infrastructure/data-base-impl/expense-file-data-base";
 import {Expense} from "../domain/interfaces/Expense";
 import {CategoryRepository} from "../domain/repositories/category-repository";
-import {CategoryDataBase} from "../infrastructure/category-data-base";
+import {CategoryDataBase} from "../infrastructure/data-base-impl/category-data-base";
 import {Category} from "../domain/interfaces/category";
 
 const expenseRepository: ExpenseRepository = new ExpenseFileDataBase();

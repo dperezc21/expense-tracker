@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {CategoryDataBase} from "../infrastructure/category-data-base";
+import {CategoryDataBase} from "../infrastructure/data-base-impl/category-data-base";
 import {CategoryRepository} from "../domain/repositories/category-repository";
 import {Category} from "../domain/interfaces/category";
 

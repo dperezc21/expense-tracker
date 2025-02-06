@@ -1,8 +1,8 @@
-import {ExpenseRepository} from "../domain/repositories/expense-repository";
-import {Expense} from "../domain/interfaces/Expense";
-import {DataBaseExpense} from "./data-bases/data-base.json";
-import {Category} from "../domain/interfaces/category";
-import {ExpenseId} from "../domain/utils/expense-Id";
+import {ExpenseRepository} from "../../domain/repositories/expense-repository";
+import {Expense} from "../../domain/interfaces/Expense";
+import {DataBaseExpense} from "../data-bases/data-base.json";
+import {Category} from "../../domain/interfaces/category";
+import {ExpenseId} from "../../domain/utils/expense-Id";
 
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseExpense();
