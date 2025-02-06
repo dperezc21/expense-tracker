@@ -7,5 +7,6 @@ const categoryUseCase = new CategoryUseCases();
 
 routerCategory.post('/add', categoryUseCase.addCategory);
 routerCategory.get('', categoryUseCase.getAllCategories);
+routerCategory.delete('/:categoryId', categoryUseCase.deleteCategory);
 
 export default routerCategory;

@@ -29,4 +29,18 @@ export class CategoryUseCases {
             res.status(500).send(err.message);
         }
     }
+
+    async deleteCategory(req: Request, res: Response) {
+        const categoryId: number = req.params.categoryId as unknown as number;
+        try {
+            const category: Category = await categoryRepository.getCategoryById(categoryId) as Category;
+            if(!category?.id) {
+                res.status(400).json({ message: "category not exists" });
+            }
+            const categoryDeleted: boolean = await categoryRepository.deleteCategory(category.id);
+            res.status(200).json({ message: `category ${categoryDeleted ? 'deleted': 'did not delete' }` });
+        } catch (err: any) {
+            res.status(500).send(err.message);
+        }
+    }
 }
