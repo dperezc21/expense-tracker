@@ -46,6 +46,7 @@ export class CategoryDataBase implements CategoryRepository {
             }
             const dataCategories: DataCategory = {categories: [...categories, newCategory] };
             await this.dataBase.writeInFile(dataCategories);
+            resolve();
         });
     }
 

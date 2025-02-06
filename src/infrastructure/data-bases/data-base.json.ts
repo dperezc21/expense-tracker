@@ -33,6 +33,6 @@ export class DataBaseExpense extends DataBaseFile<DataExpenses> {
 
 export class DataBaseCategory extends DataBaseFile<DataCategory> {
     constructor() {
-        super('category.json');
+        super('categories.json');
     }
 }
