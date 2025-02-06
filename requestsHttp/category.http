@@ -4,7 +4,7 @@ POST http://localhost:8080/categories/add HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "themes"
+  "name": "music"
 }
 
 ### get categories

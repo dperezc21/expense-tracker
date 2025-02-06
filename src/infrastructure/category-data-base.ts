@@ -2,14 +2,10 @@ import {CategoryRepository} from "../domain/repositories/category-repository";
 import {Category} from "../domain/interfaces/category";
 import {DataBaseCategory} from "./data-bases/data-base.json";
 import {DataCategory} from "../domain/interfaces/data-category";
+import {ExpenseId} from "../domain/utils/expense-Id";
 
 export class CategoryDataBase implements CategoryRepository {
     private dataBase = new DataBaseCategory();
-
-    private newCategoryId = (categoryList: Category[]): number => {
-        if(!categoryList?.length) return 1;
-        return categoryList.reduce((a, b) => a.id > b.id ? a : b).id + 1;
-    }
 
     deleteCategory(categoryId: number): Promise<boolean> {
         return new Promise(async(resolve, reject) => {
@@ -42,7 +38,7 @@ export class CategoryDataBase implements CategoryRepository {
             const categories: Category[] = await this.getAllCategories();
             const newCategory: Category = {
                 name: categoryName,
-                id: this.newCategoryId(categories)
+                id: ExpenseId.newExpenseId(categories)
             }
             const dataCategories: DataCategory = {categories: [...categories, newCategory] };
             await this.dataBase.writeInFile(dataCategories);

@@ -1,5 +1,6 @@
+import {ID} from "./ID";
 
-export interface Category {
+export interface Category extends ID {
     id: number;
     name: string;
 }

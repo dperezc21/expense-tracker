@@ -1,7 +1,7 @@
 import {CategoryType} from "./category";
+import {ID} from "./ID";
 
-export interface Expense {
-    id: number;
+export interface Expense extends ID {
     description: string;
     category?: CategoryType;
     date: Date,

@@ -7,8 +7,9 @@ POST http://localhost:8080/expenses/add HTTP/1.1
 Content-Type: application/json
 
 {
-  "description": "pc",
-  "amount": 50
+  "description": "guitar",
+  "amount": 20,
+  "category": 1
 }
 
 ### update expense

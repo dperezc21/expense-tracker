@@ -2,14 +2,10 @@ import {ExpenseRepository} from "../domain/repositories/expense-repository";
 import {Expense} from "../domain/interfaces/Expense";
 import {DataBaseExpense} from "./data-bases/data-base.json";
 import {Category} from "../domain/interfaces/category";
+import {ExpenseId} from "../domain/utils/expense-Id";
 
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseExpense();
-
-    private newExpenseId = (expenseList: Expense[]): number => {
-        if(!expenseList?.length) return 1;
-        return expenseList.reduce((a, b) => a.id > b.id ? a : b).id + 1;
-    }
 
     deleteExpense(expenseId: number): Promise<boolean> {
         return new Promise(async(resolve, reject) => {
@@ -43,7 +39,7 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         return new Promise(async(resolve): Promise<void> => {
             const expensesList: Expense[] = await this.getAllExpenses();
             const expenseToSave: Expense = {
-                amount, description, id: this.newExpenseId(expensesList), date: new Date, category
+                amount, description, id: ExpenseId.newExpenseId(expensesList), date: new Date, category
             }
             expensesList.push(expenseToSave);
             await this.dataBase.writeInFile({expenses: expensesList});
