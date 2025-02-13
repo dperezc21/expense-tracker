@@ -1,8 +1,9 @@
 import {ExpenseRepository} from "../../domain/repositories/expense-repository";
 import {Expense} from "../../domain/interfaces/Expense";
 import {DataBaseExpense} from "../data-bases/data-base.json";
-import {Category} from "../../domain/interfaces/category";
-import {ExpenseId} from "../../domain/utils/expense-Id";
+import {Category, CategoryType} from "../../domain/interfaces/category";
+import {ExpenseIdUtil} from "../../domain/utils/expense-id-util";
+import {ExpenseId} from "../../domain/interfaces/ID";
 
 export class ExpenseFileDataBase implements ExpenseRepository {
     private dataBase = new DataBaseExpense();
@@ -39,7 +40,7 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         return new Promise(async(resolve): Promise<void> => {
             const expensesList: Expense[] = await this.getAllExpenses();
             const expenseToSave: Expense = {
-                amount, description, id: ExpenseId.newExpenseId(expensesList), date: new Date, category
+                amount, description, id: ExpenseIdUtil.newExpenseId(expensesList), date: new Date, category
             }
             expensesList.push(expenseToSave);
             await this.dataBase.writeInFile({expenses: expensesList});
@@ -47,16 +48,23 @@ export class ExpenseFileDataBase implements ExpenseRepository {
         });
     }
 
-    updateExpense(expense: Expense): Promise<void> {
+    updateExpense(expenseId: ExpenseId, description: string, amount: number, category: CategoryType): Promise<void> {
         return new Promise(async(resolve, reject) => {
             let expensesList: Expense[] = await this.getAllExpenses();
+            const expense: Expense = {
+                id: expenseId,
+                amount,
+                description,
+                date: new Date(),
+                category
+            }
             expensesList = expensesList.map(value => value.id ? expense: value);
             await this.dataBase.writeInFile({expenses: expensesList});
             resolve();
         })
     }
 
-    getExpenseById(expenseId: number): Promise<Expense> {
+    getExpenseById(expenseId: ExpenseId): Promise<Expense> {
         return new Promise(async(resolve) => {
             const expenses: Expense[] = await this.getAllExpenses();
             const findExpense: Expense = expenses.find(value => value.id == expenseId ) as Expense;
